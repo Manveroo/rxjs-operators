@@ -16,8 +16,8 @@ Emitted values (aka events) are like marbles going through a series of pipes and
 At the bottom the marble falls out and this is the result you consume at a subscriber.
 
 ```mermaid
-graph LR
-    Source Observable -- Value --> Subscriber
+graph LR;
+    Source Observable -- Value --> Subscriber;
 ```
 
 ## Code examples
@@ -51,8 +51,8 @@ __Observe the values without interfering.__
 This is the most simple operator as it works like a looking glass.
 Access the value to e.g. log it or have a side-effect (assign it to another field). 
 ```mermaid
-graph LR
-    src[Source Observable] -- Value --> op[tap()] --> sink[Subscriber]
+graph LR;
+    src[Source Observable] -- Value --> op[tap()] --> sink[Subscriber];
 ```
 ```typescript
 readonly userName$: Observable<string> = this.accountService.getUserName().pipe(
@@ -74,8 +74,8 @@ Very useful when you want to e.g. extract a field from an object.
 Marble speak: The marble in a lane is replaced by this box - in goes a red marble, out comes a blue marble.
 
 ```mermaid
-graph LR
-    src[Source Observable] -- Value --> op[map()] -- Another Value --> sink[Subscriber]
+graph LR;
+    src[Source Observable] -- Value --> op[map()] -- Another Value --> sink[Subscriber];
 ```
 ```typescript
 readonly userName$: Observable<string> = this.accountService.getUser().pipe(
@@ -100,8 +100,8 @@ E.g. we have an observable param$ and with that information we want to make a ca
 Marble speak: We replace the whole lane instead of only the marble itself.
 
 ```mermaid
-graph LR
-    src[Source Observable] -- Value --> op[switchMap()] -- Another Value --> sink[Subscriber]
+graph LR;
+    src[Source Observable] -- Value --> op[switchMap()] -- Another Value --> sink[Subscriber];
 ```
 ```typescript
 readonly selectedData$: Observable<Data> = this.params$.pipe(
@@ -122,10 +122,10 @@ Marble speak: Multiple lanes are entering this box
 which will release a marble when in all lanes a marble reached the box. 
 
 ```mermaid
-graph LR
-    src[A] -- Value1 --> op[combineLatest()] -- new ValueFrom123 --> sink[Subscriber]
-    src[B] -- Value2 --> op[combineLatest()]
-    src[C] -- Value3 --> op[combineLatest()]
+graph LR;
+    src[A] -- Value1 --> op[combineLatest()] -- new ValueFrom123 --> sink[Subscriber];
+    src[B] -- Value2 --> op[combineLatest()];
+    src[C] -- Value3 --> op[combineLatest()];
 ```
 ```typescript
 readonly selectedData$: Observable<Data> = combineLatest([this.params$, this.dataService.getAllData().pipe(
