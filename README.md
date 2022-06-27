@@ -52,7 +52,7 @@ This is the most simple operator as it works like a looking glass.
 Access the value to e.g. log it or have a side-effect (assign it to another field). 
 ```mermaid
 graph LR;
-    src["Source Observable"] -- Value --> op(tap()) --> sink[Subscriber];
+    src["Source Observable"] -- Value --> op("tap()") --> sink[Subscriber];
 ```
 ```typescript
 readonly userName$: Observable<string> = this.accountService.getUserName().pipe(
