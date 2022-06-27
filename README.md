@@ -75,7 +75,7 @@ Marble speak: The marble in a lane is replaced by this box - in goes a red marbl
 
 ```mermaid
 graph LR;
-    src["Source Observable"] -- Value --> op[map()] -- "Another Value" --> sink[Subscriber];
+    src["Source Observable"] -- Value --> op["map()"] -- "Another Value" --> sink[Subscriber];
 ```
 ```typescript
 readonly userName$: Observable<string> = this.accountService.getUser().pipe(
@@ -101,7 +101,7 @@ Marble speak: We replace the whole lane instead of only the marble itself.
 
 ```mermaid
 graph LR;
-    src["Source Observable"] -- Value --> op[switchMap()] -- "Another Value (in other observable)" --> sink[Subscriber];
+    src["Source Observable"] -- Value --> op["switchMap()"] -- "Another Value (in other observable)" --> sink[Subscriber];
 ```
 ```typescript
 readonly selectedData$: Observable<Data> = this.params$.pipe(
@@ -123,9 +123,9 @@ which will release a marble when in all lanes a marble reached the box.
 
 ```mermaid
 graph LR;
-    src[A] -- Value1 --> op[combineLatest()] -- new ValueFrom123 --> sink[Subscriber];
-    src[B] -- Value2 --> op[combineLatest()];
-    src[C] -- Value3 --> op[combineLatest()];
+    src[A] -- Value1 --> op["combineLatest()"] -- "new ValueFrom123" --> sink[Subscriber];
+    src[B] -- Value2 --> op["combineLatest()"];
+    src[C] -- Value3 --> op["combineLatest()"];
 ```
 ```typescript
 readonly selectedData$: Observable<Data> = combineLatest([this.params$, this.dataService.getAllData().pipe(
