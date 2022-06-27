@@ -38,6 +38,8 @@ These should not matter for the understanding of Observables itself.
 
 ## Observables
 
+TODO: emitted value, subscriber, only emits when there are subscribers
+
 ## Operators
 
 TODO: Keep steps separated to make them more readable
@@ -64,16 +66,60 @@ readonly userName$: Observable<string> = this.accountService.getUserName().pipe(
 ```
 
 ### map
+__Convert the emitted value.__
 
+This is a simple transformation of the emitted value to another.
+Very useful when you want to e.g. extract a field from an object.
+
+Marble speak: The marble in a lane is replaced by this box - in goes a red marble, out comes a blue marble.
+
+```mermaid
+graph LR
+    src[Source Observable] -- Value --> op[map()] -- Another Value --> sink[Subscriber]
+```
+```typescript
+readonly userName$: Observable<string> = this.accountService.getUser().pipe(
+    map(user => user.name)
+);
+```
+```angular2html
+<div>
+    <span translate>user.name</span> <span>{{userName$ | async}}</span>
+</div>
+```
+
+### switchMap
+__Replace the observable.__
+
+With `switchMap` we don't change the value as in `map` but the whole observable.
+Instead of having access to the value inside an observable we work on the level of the observable. 
+
+The primary use case is to chain multiple asynchronous calls together.
+E.g. we have an observable param$ and with that information we want to make a call to the backend. 
+
+Marble speak: We replace the whole lane instead of only the marble itself.
+
+```mermaid
+graph LR
+    src[Source Observable] -- Value --> op[switchMap()] -- Another Value --> sink[Subscriber]
+```
+```typescript
+readonly selectedData$: Observable<Data> = this.params$.pipe(
+    switchMap(params => this.dataService.getDataById(params.id))
+);
+```
+```angular2html
+?
+```
 
 ### combineLatest
 __Gather multiple observables so that you can use all values at once__
 
 When you need data from different observables to generate a result this is the way.
-Only emits when all observables fired.
+Only emits when all observables have fired. => You are guaranteed that all values are present.
 
 Marble speak: Multiple lanes are entering this box
-which will release a new marble when in all lanes a marble reached the box. 
+which will release a marble when in all lanes a marble reached the box. 
 
 ```mermaid
 graph LR
@@ -82,8 +128,8 @@ graph LR
     src[C] -- Value3 --> op[combineLatest()]
 ```
 ```typescript
-readonly selectedData$: Observable<Data> = combineLatest([this.params.selectedDataId, this.dataService.getAllData().pipe(
-    map(([selectedDataId, allData]) => allData.find(dataEntry => dataEntry.id === selectedDataId))
+readonly selectedData$: Observable<Data> = combineLatest([this.params$, this.dataService.getAllData().pipe(
+    map(([params, allData]) => allData.find(dataEntry => dataEntry.id === params.selectedDataId))
 );
 ```
 ```angular2html
