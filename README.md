@@ -9,41 +9,6 @@ This is my attempt to gather everything in a sharable document.
 The examples are constructed from my real life experience with RxJS in Angular with TypeScript
 but I absolutely do not claim correctness or completion.
 
-## Github test:
-1:
-```mermaid
-graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
-```
-
-2:
-```mermaid
-graph TD;
-    A(nospace)-->B;
-    A-->C;
-    B-->D;
-    C-->D;
-```
-3:
-```mermaid
-graph TD;
-    A(nospace)-->B;
-    A(nospace)-->C;
-    B-->D;
-    C-->D;
-```
-3:
-```mermaid
-graph TD;
-    A("with space")-->B;
-    A("with space")-->C;
-    B-->D;
-    C-->D;
-```
-
 ## General concept
 
 Consider an observable like a marble run.
@@ -52,7 +17,7 @@ At the bottom the marble falls out and this is the result you consume at a subsc
 
 ```mermaid
 graph LR;
-    Source Observable -- Value --> Subscriber;
+    src["Source Observable"] -- Value --> sink[Subscriber];
 ```
 
 ## Code examples
@@ -87,7 +52,7 @@ This is the most simple operator as it works like a looking glass.
 Access the value to e.g. log it or have a side-effect (assign it to another field). 
 ```mermaid
 graph LR;
-    src[Source Observable] -- Value --> op[tap()] --> sink[Subscriber];
+    src["Source Observable"] -- Value --> op(tap()) --> sink[Subscriber];
 ```
 ```typescript
 readonly userName$: Observable<string> = this.accountService.getUserName().pipe(
@@ -110,7 +75,7 @@ Marble speak: The marble in a lane is replaced by this box - in goes a red marbl
 
 ```mermaid
 graph LR;
-    src[Source Observable] -- Value --> op[map()] -- Another Value --> sink[Subscriber];
+    src["Source Observable"] -- Value --> op[map()] -- "Another Value" --> sink[Subscriber];
 ```
 ```typescript
 readonly userName$: Observable<string> = this.accountService.getUser().pipe(
@@ -136,7 +101,7 @@ Marble speak: We replace the whole lane instead of only the marble itself.
 
 ```mermaid
 graph LR;
-    src[Source Observable] -- Value --> op[switchMap()] -- Another Value --> sink[Subscriber];
+    src["Source Observable"] -- Value --> op[switchMap()] -- "Another Value (in other observable)" --> sink[Subscriber];
 ```
 ```typescript
 readonly selectedData$: Observable<Data> = this.params$.pipe(
