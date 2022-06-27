@@ -9,6 +9,41 @@ This is my attempt to gather everything in a sharable document.
 The examples are constructed from my real life experience with RxJS in Angular with TypeScript
 but I absolutely do not claim correctness or completion.
 
+## Github test:
+1:
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+
+2:
+```mermaid
+graph TD;
+    A(nospace)-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+3:
+```mermaid
+graph TD;
+    A(nospace)-->B;
+    A(nospace)-->C;
+    B-->D;
+    C-->D;
+```
+3:
+```mermaid
+graph TD;
+    A("with space")-->B;
+    A("with space")-->C;
+    B-->D;
+    C-->D;
+```
+
 ## General concept
 
 Consider an observable like a marble run.
